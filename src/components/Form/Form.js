@@ -1,4 +1,4 @@
-export const Form = ({ onSubmit, onChange }) => {
+const Form = ({ onSubmit, onChange }) => {
   return (
     <form onSubmit={onSubmit} autoComplete="off">
       <label>
@@ -27,3 +27,5 @@ export const Form = ({ onSubmit, onChange }) => {
     </form>
   );
 };
+export default Form;
+
