@@ -1,48 +1,73 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import Form from './Form';
-import Contacts from './Contacts';
-
+import Filter from './Filter';
+import ContactsList from './ContactsList';
 export class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
     name: '',
     number: '',
   };
 
-  createContact = (name, number) => {
-    return { id: nanoid(4), name, number };
+  notifiesAlert = nameContact => {
+    alert(`${nameContact} is already in contacts.`);
+  };
+
+  checkСontact = nameContact => {
+    this.state.contacts.some(
+      ({ name: curentName }) => curentName === nameContact
+    );
+  };
+
+  addContact = (name, number) => {
+    this.setState(({ contacts }) => ({
+      contacts: [...contacts, { id: nanoid(4), name, number }],
+    }));
+  };
+
+  onDeleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(({ id }) => id !== contactId),
+    }));
   };
 
   handleChange = e => {
     const { name, value } = e.currentTarget;
-
-    this.setState({ [name]: value });
-    console.log(this.state);
+    this.setState({
+      [name]: value,
+    });
+    console.log(this.state.filter);
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const name = form.elements.name.value;
-    const tel = form.elements.number.value;
-
-    this.setState(({ contacts }) => ({
-      contacts: [...contacts, this.createContact(name, tel)],
-    }));
-
-    console.log(this.state.contacts);
-    form.reset();
+  handleSubmit = ({ name: newName, number }) => {
+    this.checkСontact(newName)
+      ? this.notifiesAlert(newName)
+      : this.addContact(newName, number);
   };
+
   render() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
 
     return (
-      <section>
+      <div>
         <h1>Phonebook</h1>
-        <Form onSubmit={this.handleSubmit} onChange={this.handleChange} />
-        <Contacts contactsTitle={'Contacts'} contacts={contacts} />
-      </section>
+        <Form onSubmit={this.handleSubmit} />
+
+        <h2>Contacts</h2>
+        <Filter onChange={this.handleChange} />
+        <ContactsList
+          contacts={contacts}
+          filter={filter}
+          onDeleteContact={this.onDeleteContact}
+        />
+      </div>
     );
   }
 }
