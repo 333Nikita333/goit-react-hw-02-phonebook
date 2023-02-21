@@ -58,7 +58,7 @@ export class App extends Component {
         <Form onSubmit={this.handleSubmit} />
 
         <h2>Contacts</h2>
-        <Filter onChange={this.handleChange} />
+        <Filter onChange={this.handleChange} value={filter}/>
         <ContactsList
           contacts={contacts}
           filter={filter}
