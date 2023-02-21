@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import ContactListItem from 'components/ContactListItem';
+import { List } from './ContactsList.styled';
 
 const ContactsList = ({ contacts, filter, onDeleteContact }) => {
   return contacts.length > 0 ? (
-    <ul>
+    <List>
       {contacts
         .filter(({ name }) => name.toLowerCase().includes(filter.toLowerCase()))
         .map(({ id, name, number }) => (
@@ -15,7 +16,7 @@ const ContactsList = ({ contacts, filter, onDeleteContact }) => {
             onDeleteContact={onDeleteContact}
           />
         ))}
-    </ul>
+    </List>
   ) : (
     <p>Contact list is empty</p>
   );

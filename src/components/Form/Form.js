@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { FormBox, InputName, InputTel, Button } from './Form.styled';
 class Form extends Component {
   state = {
     name: '',
@@ -24,23 +25,23 @@ class Form extends Component {
     const { name, number } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit} autoComplete="off">
+      <FormBox onSubmit={this.handleSubmit} autoComplete="off">
         <label>
-          Name
-          <input
+          <span>Name</span>
+          <InputName
             type="text"
             name="name"
             value={name}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. 
-            For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
             onChange={this.handleChange}
           />
         </label>
         <label>
-          Tel
-          <input
+          <span>Tel</span>
+          <InputTel
             type="tel"
             name="number"
             value={number}
@@ -50,8 +51,8 @@ class Form extends Component {
             onChange={this.handleChange}
           />
         </label>
-        <button type="submit">Add contact</button>
-      </form>
+        <Button type="submit">Add contact</Button>
+      </FormBox>
     );
   }
 }
