@@ -20,7 +20,7 @@ export class App extends Component {
   };
 
   checkСontact = nameContact => {
-    this.state.contacts.some(
+    return this.state.contacts.some(
       ({ name: curentName }) => curentName === nameContact
     );
   };
